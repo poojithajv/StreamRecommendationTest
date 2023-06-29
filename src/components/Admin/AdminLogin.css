@@ -1,0 +1,147 @@
+* {
+    margin: 0px;
+    padding: 0px;
+  }
+  /* AdminLogin and TestReport conmponents css*/
+  .admin-header-container{
+    padding-left:30px;
+    background-color:#1d1a69;
+    color:white;
+    height:60px;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    padding-right:15px;
+    padding-left:15px;
+    border:1px solid black;
+  }
+  
+  .admin-header-logo-container{
+    height:100%; 
+      display:flex; 
+      justify-content:center ;
+      align-items:center;
+  }
+  
+  .admin-desktop-header-navbar-container{
+    display:flex;
+      flex-direction:row;
+      align-items:center;
+      color: white;
+  }
+  .admin-desktop-header-navbar-link{
+    color:white;
+    font-weight:bold;
+    font-size:18px;
+    margin-top:20px;
+    margin-bottom:30px;
+    margin-right: 20px;
+    transition: border-color 0.66s ease-out, font-size 0.3s ease-out;
+}
+
+.admin-desktop-header-navbar-link:hover{
+    background-position: 100% 100%;
+    transform: scale(1);
+    transition: transform 1s;
+    color:rgb(123, 120, 120);
+}
+  
+  .admin-mobile-header-navbar-container{
+    display:none;
+  }
+  
+  .admin-header-navbar-link{
+    text-align: center;
+    color:#1d1a69;
+      width:170px;
+      height:50px;
+      font-weight:bold;
+      margin-top:10px;
+      font-size: 12px;
+      margin-bottom:10px;
+      margin-left: 10px;
+      transition: border-color 0.66s ease-out, font-size 0.3s ease-out;
+  }
+
+  .admin-header-navbar-link:hover{
+    background-position: 100% 100%;
+    transform: scale(1.3);
+    transition: transform 1s;
+    color:rgb(123, 120, 120);
+  }
+  
+  
+  @media screen and (max-width:768px){
+    .admin-desktop-header-navbar-container{
+      display:none;
+    }
+    .admin-mobile-header-navbar-container{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:28px;
+    }
+    .admin-hamburger-btn{
+      color:white;
+      border:none;
+      background-color:transparent;
+  }
+  
+  .admin-mobile-hamburger-menu{
+      list-style-type:none;   
+  }
+  }
+  
+  .display-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .google-signin-button {
+    display: inline-flex;
+    align-items: center;
+    background-color: #fff;
+    color: #737373;
+    border: 1px solid #737373;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .google-signin-button img {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+  }
+  
+  /* TestReport component css */
+  .test-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    align-items: center;
+  }
+
+
+  /* Not Found component css*/
+  .not-found-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .not-found-img {
+    height: 300px;
+    width:300px;
+  }
+  .no-found-heading {
+    font-family: "Roboto";
+    font-weight: bold;
+    font-size: 30px;
+    color: #989898;
+  }
