@@ -1,3 +1,4 @@
+
 /* Test Report component css */
 .test-table{
     margin-top: 0px;
@@ -5,7 +6,22 @@
     margin-right: 50px;
     margin-bottom: 30px;
 }
+.mobile-table-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
 
+.table-header {
+  font-size: 16px;
+  border-right: 1px solid rgba(224, 224, 224, 1);
+  white-space: wrap;
+}
+.table-cell {
+  border-right: 1px solid rgba(224, 224, 224, 1);
+}
 table td:first-child {
      border-left: thin solid;
 }
@@ -169,20 +185,19 @@ table td {
 /* Chart Component css*/
 .charts{
     display: flex;
-    padding:25px;
+    padding:20px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     border: 1px solid black;
     border-radius: 16px;
-    width:900px;
+    width:800px;
   }
   
   .details{
     display: flex;
     flex-direction: column;
-    width:400px;
-    font-size: 20px;
+    font-size: 18px;
   }
   .piechart{
     margin-left: 0px;
@@ -195,6 +210,25 @@ table td {
     align-items: center;
     margin: auto;
     padding-top: 50px;
+  }
+  .button-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin:auto;
+    margin-top: 30px;
+  }
+  .send{
+    color:white;
+    padding:10px;
+    border:none;
+    font-size:16px;
+    margin-right:20px;
+  }
+  @media screen and (width:1024px){
+    .chart-container{
+      margin-left: 120px;
+    }
   }
   @media screen and (max-width:930px){
     .chart-container{
@@ -218,6 +252,22 @@ table td {
       width:400px;
     }
   }
+  @media screen and (max-width:768px){
+    .send{
+      width:100px;
+    }
+  }
+  @media screen and (max-width:540px) {
+    .chart-container{
+     padding-left:170px;
+    margin-top: 60px;
+    
+    }
+    .charts{
+      width: 450px;
+      margin-right: 20px;
+    }
+  }
   @media screen and (max-width:470px){
     .charts{
       width:300px;
@@ -226,11 +276,42 @@ table td {
       font-size: 15px;
     }
   }
-  @media screen and (max-width:768px){
-    .send{
-      width:100px;
+    
+  @media  screen and (max-width:415px) {
+    .chart-container{
+      padding-left: 250px;
+      margin-top: 80px;
+    }
+    .charts{
+      width: 400px;
+      margin-left: 60px;
+    }
+     .button-container{
+      display: flex;
+      align-items: center;
+      justify-self:center;
+      margin-left:-70px;
     }
   }
+  @media screen and (max-width:395px){
+    .button-container{
+      margin-left: -90px;
+    }
+  }
+    
+  @media  screen and (max-width:280px) {
+    .chart-container{
+      padding-left: 340px;
+      margin-top: 80px;
+    }
+    .charts{
+      margin-right: 40px;
+    }
+    .button-container{
+      margin-left:-160px;
+    }
+  }
+  
   
   /* AdminLogin, TestReport and Send Assessments conmponents css*/
   .admin-header-container{
@@ -333,32 +414,82 @@ table td {
 
 
   /* Bar Chart Component css*/
+  .tables-container{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:warp;
+    /* background-color:blue; */
+  }
 
   .barchart-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    padding: 5px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
   }
+
+  .barchart-container-responsive{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    width:100%;
+  }
+
+  .barchart-buttons-container{
+     margin-top:40px;
+      display:flex;
+      flex-direction:row;
+      justify-content:center; 
+      align-items:center;
+      margin-bottom:10px;
+  }
+
   .table-container{
     display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-    width:600px;
+    padding: 10px;
+    width:500px;
   }
-  .heading{
+.chart-buttons-container{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin-top: 20px;
+  /* background-color:blue; */
+}
+
+  .barchart-heading{
     text-align: center;
-    font-size: 32px;
-    margin-bottom: 15px;
+    font-size: 30px;
+    margin-bottom: 10px;
   }
   th,td{
-    font-size: 18px;
+    font-size: 15px;
   }
+@media screen and (max-width:1024px){
+  .barchart-container{
+    padding-top:20px;
+    padding-bottom:20px;
+    height:auto;
+  }
+  
+  .barchart-container-responsive{
+    flex-direction:column;
+  }
+}
+
   @media screen and (max-width:680px){
+    .barchart-container{
+      padding-top:20px;
+      padding-bottom:20px;
+      height:auto;
+    }
+    
     .table-container{
       width:500px;
     }
@@ -367,6 +498,7 @@ table td {
     }
   }
   @media screen and (max-width:530px){
+    
     .table-container{
       width:400px;
       margin-left: 70px;
@@ -376,13 +508,22 @@ table td {
     }
   }
   @media screen and (max-width:430px){
+    .chart-buttons-container{
+      justify-content:center;
+    }
+
+    .barchart-buttons-container{
+      width:100%;
+      padding-left:150px;
+    }
+
     .table-container{
       margin-left: 20px;
     }
     .barchart{
       margin-left: 20px;
     }
-    .heading{
+    .barchart-heading{
       margin-left: 50px;
       font-size: 20px;
     }
@@ -396,11 +537,19 @@ table td {
     .table-container{
       margin-left: 200px;
     }
+    .barchart-buttons-container{
+      margin-left: 80px;
+    }
   }
 
   
 
   /* Dashboard container css*/
+  .main-container{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+  }
   .dashboard-container{
     display: flex;
     flex-direction: column;
@@ -419,6 +568,12 @@ table td {
     margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
+  }
+  .piechart-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .piechart-details{
     display:flex;
@@ -442,9 +597,8 @@ table td {
     margin-right: 20px;
   }
   .allstreamsPiechart{
-    height: 500px;
-    width: 500px;
-    margin-left: 0px;
+    height: 400px;
+    width: 400px;
   }
   @media screen and (max-width:1086px){
     .allstreamsPiechart{
@@ -492,6 +646,9 @@ table td {
   @media screen and (max-width:300px){
     .piechart-details{
       width:220px;
+    }
+    .allstreamsPiechart{
+      width:300px;
     }
   }
   .test-chart{

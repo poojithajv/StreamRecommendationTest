@@ -120,14 +120,14 @@ function Chart() {
         </PieChart>
         </div>
       </div>
-      <div style={{marginTop:'40px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',marginBottom:'30px'}}>
+      <div className='button-container'>
       {/* By clicking Download button, pdf with student data can be dowloaded */}
-      <button type='button' style={{backgroundColor:'cyan',color:'white',padding:'10px',border:'none',fontSize:'15px',marginRight:'20px'}} onClick={generatePdf} >
+      <button type='button' style={{backgroundColor:'cyan',width:'100px',height:'50px'}} className='send' onClick={generatePdf} >
         Download
       </button>
       {/* By clicking the Send Email button, the boolean value of isOpen will be changed */}
-      <button style={{backgroundColor:'darkgrey',color:'white',padding:'10px',border:'none',fontSize:'15px',marginRight:'20px'}} onClick={()=> sendMail(data)} className='send'>Send Email</button>
-      <button style={{backgroundColor:'blue',color:'white',padding:'10px',border:'none',fontSize:'15px',marginRight:'20px'}} onClick={()=> navigate('/studentBarChart',{state:data})}>View Data</button>
+      <button style={{backgroundColor:'darkgrey',marginRight:'20px',width:'100px',height:'50px'}} onClick={()=> sendMail(data)} className='send'>Send Email</button>
+      <button style={{backgroundColor:'blue',marginRight:'20px',width:'100px',height:'50px'}} onClick={()=> navigate('/studentBarChart',{state:data})} className='send'>View Data</button>
       </div>
       {/* react-bootstrap modal for including cc */}
         <Modal 

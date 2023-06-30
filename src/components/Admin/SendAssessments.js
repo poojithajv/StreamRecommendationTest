@@ -118,7 +118,7 @@ function SendAssessments() {
         fileExtension === "docx"
       ) {
         // send mail using mailto for uploaded document
-        window.location.href = `mailto:${allMails}?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:overseaseducation1000@gmail.com?bcc=${allMails}&subject=${subject}&body=${body}`;
         // takes all input mails given by admin and send mails
       } else if (mailSentType === "manual") {
         const modifiedEmailAddresses = allMails // removes extra spaces and and extra commas
@@ -127,7 +127,7 @@ function SendAssessments() {
           .replace(/,,/, ",");
         console.log(modifiedEmailAddresses);
         // send mail using emailjs for manually entered mails
-        window.location.href = `mailto:${modifiedEmailAddresses}?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:overseaseducation1000@gmail.com?bcc=${modifiedEmailAddresses}&subject=${subject}&body=${body}`;
       } else {
         alert("file format was not supported");
       }

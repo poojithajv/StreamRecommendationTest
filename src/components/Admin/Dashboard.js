@@ -100,7 +100,7 @@ function Dashboard() {
     }
   }, []);
   return (
-    <div>
+    <div className="main-container">
         {/* if admin has signedIn, the below code will render */}
         <div className='admin-header-container'>
         {/* header for desktop  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Sign Out */}
@@ -202,10 +202,22 @@ function Dashboard() {
         {/* dashboard container where all metrics were displayed */}
         <div className="dashboard-container">
             <h1 className="dashboard-heading">Stream Recommendation Test metrics</h1>
-            <h2 className="allmetricsHeading">Below Metrics are about percentage of each stream which are correctly answered by students</h2>
-            {/* legend of all pie charts */}
-            <div className="piechart-details">
-                <div className="test-legend">
+            <h2 className="allmetricsHeading">Below Metrics are about percentage of each stream which are correctly answered by students</h2> 
+            {/* all streams pie charts */}
+            <div className="test-chart">
+                {/* all streams total scores percentages pie chart */}
+                <div className="piechart-container">
+                <Chart
+                className="allstreamsPiechart"
+                chartType="PieChart"
+                data={pieData}
+                options={{
+                colors:["#0e3ab3","#f05232","#e89510","#2b8a3c"],
+                title:"Stream Recommendation Test Metric",legend:"none"
+                }}
+            ></Chart>
+            <div className='legend-container'>
+            <div className="test-legend">
                     <button className='color' ></button>
                     <span className='test'>Humanities</span>
                 </div>
@@ -221,7 +233,21 @@ function Dashboard() {
                     <button className='color' style={{backgroundColor:"#2b8a3c"}}></button>
                     <span className='test'>Science (Math)</span>
                 </div>
-                <div className="test-legend">
+            </div>
+            </div>
+            {/* all streams aptitude total scores percentages pie chart */}
+            <div className="piechart-container">
+            <Chart
+                className="allstreamsPiechart"
+                chartType="PieChart"
+                data={pieData1}
+                options={{
+                colors:["#963596","#5c9ed1","#e62e81","#62b027"],
+                title:"All Streams Aptitude Metric",legend:"none"
+                }}
+            ></Chart>
+            <div className="legend-container">
+            <div className="test-legend">
                     <button className='color' style={{backgroundColor:"#963596"}}></button>
                     <span className='test'>Humanities Aptitude</span>
                 </div>
@@ -237,46 +263,10 @@ function Dashboard() {
                     <button className='color' style={{backgroundColor:"#62b027"}}></button> 
                     <span className='test'>Science (Math) Aptitude</span>
                 </div>
-                <div className="test-legend">
-                    <button className='color' style={{backgroundColor:"#b02709"}}></button>   
-                    <span className='test'>Humanities Interests</span>
-                </div>
-                <div className="test-legend">
-                    <button className='color' style={{backgroundColor:"#102061"}}></button>
-                    <span className='test'>Commerce Interests</span>
-                </div>
-                <div className="test-legend">
-                    <button className='color' style={{backgroundColor:"#630fa8"}}></button>
-                    <span className='test'>Science (Bio) Interests</span>
-                </div>
-                <div className="test-legend">
-                    <button className='color' style={{backgroundColor:"#88e615"}}></button>
-                    <span className='test'>Science (Math) Interests</span>
-                </div>
             </div>
-            {/* all streams pie charts */}
-            <div className="test-chart">
-                {/* all streams total scores percentages pie chart */}
-                <Chart
-                className="allstreamsPiechart"
-                chartType="PieChart"
-                data={pieData}
-                options={{
-                colors:["#0e3ab3","#f05232","#e89510","#2b8a3c"],
-                title:"Stream Recommendation Test Metric",legend:"none"
-                }}
-            ></Chart>
-            {/* all streams aptitude total scores percentages pie chart */}
-            <Chart
-                className="allstreamsPiechart"
-                chartType="PieChart"
-                data={pieData1}
-                options={{
-                colors:["#963596","#5c9ed1","#e62e81","#62b027"],
-                title:"All Streams Aptitude Metric",legend:"none"
-                }}
-            ></Chart>
+            </div>
             {/* all streams interest total scores percentages pie chart */}
+            <div className="piechart-container">
             <Chart
                 className="allstreamsPiechart"
                 chartType="PieChart"
@@ -286,6 +276,26 @@ function Dashboard() {
                 title:"All Streams Interest Metric",legend:"none"
                 }}
             ></Chart>
+            <div className="legend-container">
+            <div className="test-legend">
+                    <button className='color' style={{backgroundColor:"#b02709"}}></button>   
+                    <span className='test'>Humanities Interest</span>
+                </div>
+                <div className="test-legend">
+                    <button className='color' style={{backgroundColor:"#102061"}}></button>
+                    <span className='test'>Commerce Interest</span>
+                </div>
+                <div className="test-legend">
+                    <button className='color' style={{backgroundColor:"#630fa8"}}></button>
+                    <span className='test'>Science (Bio) Interest</span>
+                </div>
+                <div className="test-legend">
+                    <button className='color' style={{backgroundColor:"#88e615"}}></button>
+                    <span className='test'>Science (Math) Interest</span>
+                </div>
+            </div>
+            </div>
+            
             </div>
         </div>
     </div>

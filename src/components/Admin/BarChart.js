@@ -94,9 +94,10 @@ function StudentBarChart() {
   return (
     <div className='barchart-container'>
         {/* table with low, medium and high interest of all streams aptitude and interest scores data */}
-        <div ref={detailsPdf}>
+        <div ref={detailsPdf} className="barchart-container-responsive">
+          <div className="tables-container">
         <div className='table-container'>
-            <h1 className='heading'>Student Interest Status in Stream Recommendation Test </h1>
+            <h1 className='barchart-heading'>Stream wise aptitude and interest score</h1>
         <table border="2px" style={{margin:'auto'}}>
         <thead>
                 <tr>
@@ -118,7 +119,7 @@ function StudentBarChart() {
         </div>
         {/*All Streams Scores of Student in Stream Recommendation Test  */}
         <div className='table-container'>
-        <h1 className='heading'>All Streams Scores of Student in Stream Recommendation Test </h1>
+        <h1 className='barchart-heading'>Student interest according to stream</h1>
             <table border="2px" style={{margin:'auto'}}>
             <thead>
                     <tr>
@@ -131,13 +132,15 @@ function StudentBarChart() {
                     {streams.map((item,index) =><tr>
                         <td>{item[0]}</td>
                         <td>{item[1] > 0 && item[1]<2 ? 'Low' : (item[1] > 1 && item[1] < 4 ? 'Medium' : 'High' )}</td>
-                        <td>{item[2] > 0 && item[1]<6 ? 'Low' : (item[2] > 5 && item[1] < 11 ? 'Medium' : 'High' )}</td>
+                        <td>{item[2] > 0 && item[2]<6 ? 'Low' : (item[2] > 5 && item[2] < 11 ? 'Medium' : 'High' )}</td>
                     </tr>)}
                 </tbody>
             </table>
         </div>
+        </div>
+        <div className="chart-buttons-container">
         <div className='table-container'>
-            <h1 className='heading'>All streams Total Score Pie Chart</h1>
+            <h1 className='barchart-heading'>All streams Total Score Bar Chart</h1>
             {/* bar chart of all streams total scores of stream recommendation test */}
             <BarChart width={500} height={400} data={BarchartData} margin={{
                 top: 30,
@@ -159,8 +162,8 @@ function StudentBarChart() {
             <YAxis type="number" style={{fontSize:'15px',fontWeight:'bold'}} domain={[0, 20]}/>
             </BarChart>
             </div>
-        </div>
-        <div style={{marginTop:'40px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',marginBottom:'30px'}}>
+        
+        <div className="barchart-buttons-container">
       {/* By clicking Download button, pdf with student data can be dowloaded */}
       <button type='button' style={{backgroundColor:'cyan',color:'white',padding:'10px',border:'none',fontSize:'15px',marginRight:'20px'}} onClick={generatePdf} >
         Download
@@ -170,6 +173,8 @@ function StudentBarChart() {
       {/* By clicking the Send Email button, the boolean value of isOpen will be changed */}
       <button style={{backgroundColor:'blue',color:'white',padding:'10px',border:'none',fontSize:'15px',marginRight:'20px'}} onClick={()=> navigate('/studentChart',{state:data})}>View Score</button>
       </div>
+      </div>
+        </div>
       {/* react-bootstrap modal for including cc */}
         <Modal 
         show={isOpen} 
