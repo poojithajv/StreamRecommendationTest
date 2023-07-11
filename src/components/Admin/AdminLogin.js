@@ -1,19 +1,27 @@
 // AdminLogin component is about admin page with different components like dashboard, assessments, test report and sign out
-// import all required packages like react, react-icons, reactjs-popup, js-cookie, uuid, gapi-script, react-router-dom and AdminLogin.css, reactjs-popup/dist/index.css files to render AdminLogin component
+// import all required packages like react, react-icons, reactjs-popup, js-cookie, uuid, gapi-script, react-router-dom, components like Dashboard, SendAssessments and TestReport and AdminLogin.css, reactjs-popup/dist/index.css files to render AdminLogin component
 import React, { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import Cookies from "js-cookie";
 import { v4 as uuidv4 } from "uuid";
+import Dashboard from './Dashboard'
+import SendAssessments from './SendAssessments'
+import TestReport from "./TestReport";
 import { gapi } from "gapi-script";
 import { useNavigate } from "react-router-dom";
+import Footer from '../Footer/Footer'
 import "./AdminLogin.css";
 // scopes variable is a google api to get access of google spreadsheets
 const SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
 const AdminLogin = () => {
-  // usestates to store data responses for all tests
+  // usestates of isDashboard, isAssessment, isTestReports to store boolen value
+  const [isDashboard,setIsDashboard]=useState(false)
+  const [isAssessment,setIsAssessment]=useState(false)
+  const [isTestReports,setIsTestReports]=useState(false)
+  // streamData usestate to store data responses for all tests
   const [streamData, setStreamData] = useState([]);
   // usestate to store user email of client
   const [userEmail, setUserEmail] = useState("");
@@ -56,8 +64,6 @@ const AdminLogin = () => {
           const authInstance = window.gapi.auth2.getAuthInstance();
           setIsSignedIn(authInstance.isSignedIn.get());
           authInstance.isSignedIn.listen(updateSignInStatus);
-          // execute request function to get google sheet data responses of stream recommendation test
-          executeRequestStreamRecommendationTest()
           getUserEmail();
         })
         // throws error if any error occurs while initializing google api client
@@ -117,6 +123,8 @@ const AdminLogin = () => {
         const email = basicProfile.getEmail();
         // if email from the auth instance equals to the provided email then a unique loginid token will be created
         if (email === "overseaseducation1000@gmail.com") {
+          // execute request function to get google sheet data responses of stream recommendation test
+          executeRequestStreamRecommendationTest()
           const loginId = uuidv4();
           // Cookies.set method is used to set cookies for the login id token and expiration validity of 30 days
           Cookies.set("token", loginId, { expires: 30 });
@@ -223,6 +231,7 @@ const AdminLogin = () => {
           }
         }
       })
+      // calculating total score and adding all streams aptitude and interests scores to streamData object
       let total_score=humanities_aptitude_score+commerce_aptitude_score+science_bio_aptitude_score+science_math_aptitude_score+
       humanities_interests_score+commerce_interests_score+science_bio_interests_score+science_math_interests_score
       item.humanities_aptitude_score=humanities_aptitude_score
@@ -267,12 +276,28 @@ const AdminLogin = () => {
     const authInstance = window.gapi.auth2.getAuthInstance();
     authInstance.signOut();
   };
-
+  // handleDashboard function to set useState of isDashboard to true and others to false
+  const handleDashboard=()=>{
+    setIsDashboard(true)
+    setIsAssessment(false)
+    setIsTestReports(false)
+  }
+  // handleAssessment function to set useState of isAssessment to true and others to false
+  const handleAssessment=()=>{
+    setIsDashboard(false)
+    setIsAssessment(true)
+    setIsTestReports(false)
+  }
+  // handleTestReports function to set useState of isTestReports to true and others to false
+  const handleTestReports=()=>{
+    setIsDashboard(false)
+    setIsAssessment(false)
+    setIsTestReports(true)
+  }
 
   return (
     <div>
-      <div>
-        <p>
+      <div className="admin-container">
           {isSignedIn ? (
             // if admin has signedIn, the below code will render
             <div className='admin-header-container'>
@@ -280,36 +305,30 @@ const AdminLogin = () => {
               <div className='admin-header-logo-container'>
                 {/* logo and after clicking this logo, it'll navigates to home route*/}
                 <img
-                  src='https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png'
+                  src='https://res.cloudinary.com/de5cu0mab/image/upload/v1688971136/Logo_Final_uovjgi.png'
                   alt='logo'
-                  style={{
-                    height: "50px",
-                    width: "100px",
-                    borderRadius: "10px",
-                  }}
+                  style={{ height: "50px", width: "100px", borderRadius: "10px",border:'none',backgroundColor:'white' }}
                   onClick={() => navigate("/")}
                 />
               </div>
               <div className='admin-desktop-header-navbar-container'>
                 {/* when clicking this Dashboard text, it'll navigates to dashboard route */}
                 <p
-                  onClick={() => navigate("/dashboard", { state: streamData })}
+                  onClick={() => handleDashboard()}
                   className='admin-desktop-header-navbar-link'
                 >
                   Dashboard
                 </p>
                 {/* when clicking this Assessments text, it'll navigates to send assessments route */}
                 <p
-                  onClick={() =>
-                    navigate("/sendAssessments", { state: streamData })
-                  }
+                  onClick={() =>handleAssessment()}
                   className='admin-desktop-header-navbar-link'
                 >
                   Assessments
                 </p>
                 {/* when clicking this Test Report text, it'll navigates to test report route */}
                 <p
-                  onClick={() => navigate("/testReport", { state: streamData})}
+                  onClick={() => handleTestReports()}
                   className='admin-desktop-header-navbar-link'
                 >
                   Test Report
@@ -325,7 +344,7 @@ const AdminLogin = () => {
               {/* nav header for mobile  with Logo and components Dashboard, Assessments, Test Report and Sign Out */}
               <div className='admin-mobile-header-navbar-container'>
                 <Popup
-                  contentStyle={{ textAlign:'center',display:'flex',justifyContent:'center',width: "100%", backgroundColor: "white" }}
+                  contentStyle={{ width: '70%',backgroundColor:"white",textAlign:'center',display:'flex',flexDirection:'column',justifyContent:'content',alignItems:'center' }}
                   trigger={
                     <button className='admin-hamburger-btn'>
                       <GiHamburgerMenu />
@@ -337,7 +356,7 @@ const AdminLogin = () => {
                     {/* when clicking this Dashboard text, it'll navigates to dashboard route */}
                     <li
                       onClick={() =>
-                        navigate("/dashboard", { state: streamData})
+                        handleDashboard()
                       }
                       className='admin-header-navbar-link'
                     >
@@ -346,7 +365,7 @@ const AdminLogin = () => {
                     {/* when clicking this Assessments text, it'll navigates to send assessments route */}
                     <li
                       onClick={() =>
-                        navigate("/sendAssessments", { state: streamData })
+                        handleAssessment()
                       }
                       className='admin-header-navbar-link'
                     >
@@ -355,7 +374,7 @@ const AdminLogin = () => {
                     {/* when clicking this Test Report text, it'll navigates to test report route */}
                     <li
                       onClick={() =>
-                        navigate("/testReport", { state: streamData})
+                        handleTestReports()
                       }
                       className='admin-header-navbar-link'
                     >
@@ -386,8 +405,20 @@ const AdminLogin = () => {
               </button>
             </div>
           )}
-        </p>
+          {/* if isDashboard is true then Dashboard component will render */}
+          {isDashboard && (
+            <Dashboard datat={streamData}/>
+          )}
+          {/* if isAssessment is true then SendAssessments component will render */}
+          {isAssessment && (
+            <SendAssessments datat={streamData}/>
+          )}
+          {/* if isTestReports is true then TestReport component will render */}
+          {isTestReports && (
+            <TestReport datat={streamData} />
+          )}
       </div>
+      <Footer />
     </div>
   );
 };

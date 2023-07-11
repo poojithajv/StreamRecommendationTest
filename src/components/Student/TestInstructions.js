@@ -59,7 +59,7 @@ const TestInstructions = () => {
           I agree to the test instructions
         </label>
         <button
-          className='btn btn-primary my-3 m-3'
+          className={agreed ? 'start-button' : 'not-start-button'}
           onClick={handleStartTest}
           disabled={!agreed}
         >

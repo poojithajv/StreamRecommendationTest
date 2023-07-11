@@ -1,25 +1,23 @@
 // Test Report component is about displaying all students data respones of stream recommendation test in table
-// import react, react-router-dom, react-icons, js-cookie packages and reactjs-popup/dist/index.css and index.css files to render TestReport component
+// import react, react-router-dom, js-cookie packages and reactjs-popup/dist/index.css and index.css files to render TestReport component
 import { useState, useEffect } from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
-import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import Cookies from "js-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import "./index.css";
 
-function TestReport() {
+function TestReport(props) {
   // location varaiable to get location of the testReport route and state
+  const {datat}=props
   const location = useLocation();
   // useState of data to store stream recommendation test data responses
   const [data, setData] = useState(
-    (location.state || []).map((field, index) => ({
+    (datat || []).map((field, index) => ({
       ...field,
       id: index + 1, // Adding 1 to index to make IDs start from 1
     }))
   );
-  console.log(data);
   // navigate variable used to naviagating to different routes
   const navigate = useNavigate();
   // usestate of search to store search data
@@ -31,6 +29,7 @@ function TestReport() {
   // startDate usestate to store start date
   const [endDate, setEndDate] = useState("");
 
+  // table data
   const columns = [
     {
       field: "id",
@@ -38,7 +37,6 @@ function TestReport() {
       width: 40,
       headerClassName: "table-header",
       cellClassName: "table-cell",
-      sortable:false
     },
     {
       field: "Timestamp",
@@ -46,7 +44,6 @@ function TestReport() {
       width: 100,
       headerClassName: "table-header",
       cellClassName: "table-cell",
-      sortable:false
     },
     {
       field: "Full_Name",
@@ -160,11 +157,14 @@ function TestReport() {
             handleUpdate(params.row);
           }}
           style={{
-            padding: "3px",
-            width: "70px",
+            padding: "4px",
+            width: "60px",
             height: "30px",
             fontSize: "10px",
-            backgroundColor: "lightblue",
+            backgroundColor: "#004461",
+            borderRadius:'5px',
+            marginLeft:"10px",
+            color:"#FFFFFF",
             fontWeight: "bold",
             border:'none'
           }}
@@ -182,11 +182,14 @@ function TestReport() {
         <button
           onClick={() => navigate("/studentBarChart", { state: params.row })}
           style={{
-            padding: "3px",
-            width: "70px",
+            padding: "4px",
+            width: "60px",
             height: "30px",
             fontSize: "10px",
-            backgroundColor: "lightgrey",
+            backgroundColor: "#ED2B2A",
+            borderRadius:'5px',
+            marginLeft:"10px",
+            color:"#FFFFFF",
             fontWeight: "bold",
             border:'none'
           }}
@@ -205,6 +208,7 @@ function TestReport() {
     }
   };
 
+  // handleKeyDown function to set search value to setSearch function and data to setFilterData function
   const handleKeyDown = (e) => {
     if (e.key === "Backspace") {
       setSearch(e.target.value);
@@ -288,105 +292,9 @@ function TestReport() {
 
   return (
     <>
-      {/* if admin has signedIn, the below code will render */}
-      <div className='admin-header-container'>
-        {/* header for desktop  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Sign Out */}
-        <div className='admin-header-logo-container'>
-          {/* logo and after clicking this logo, it'll navigates to home route*/}
-          <img
-            src='https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png'
-            alt='logo'
-            style={{
-              height: "50px",
-              width: "100px",
-              borderRadius: "10px",
-            }}
-            onClick={() => navigate("/")}
-          />
-        </div>
-        <div className='admin-desktop-header-navbar-container'>
-          {/* when clicking this Dashboard text, it'll navigates to dashboard route */}
-          <p
-            onClick={() => navigate("/dashboard", { state: data })}
-            className='admin-desktop-header-navbar-link'
-          >
-            Dashboard
-          </p>
-          {/* when clicking this Assessments text, it'll navigates to send assessments route */}
-          <p
-            onClick={() => navigate("/sendAssessments", { state: data })}
-            className='admin-desktop-header-navbar-link'
-          >
-            Assessments
-          </p>
-          {/* when clicking this Test Report text, it'll navigates to test report route */}
-          <p
-            onClick={() => navigate("/testReport", { state: data })}
-            className='admin-desktop-header-navbar-link'
-          >
-            Test Report
-          </p>
-          {/* when clicking this Admin text, it'll navigates to admin login route and agains admin can access all routes */}
-          <p
-            className='admin-desktop-header-navbar-link'
-            onClick={() => navigate("/adminLogin")}
-          >
-            Admin
-          </p>
-        </div>
-        {/* nav header for mobile  with Logo and components Dashboard, Assessments, Test Report and Admin */}
-        <div className='admin-mobile-header-navbar-container'>
-          <Popup
-            contentStyle={{
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-              width: "100%",
-              backgroundColor: "white",
-            }}
-            trigger={
-              <button className='admin-hamburger-btn'>
-                <GiHamburgerMenu />
-              </button>
-            }
-            position='bottom right'
-          >
-            <ul className='admin-mobile-hamburger-menu'>
-              {/* when clicking this Dashboard text, it'll navigates to dashboard route */}
-              <li
-                onClick={() => navigate("/dashboard", { state: data })}
-                className='admin-header-navbar-link'
-              >
-                Dashboard
-              </li>
-              {/* when clicking this Assessments text, it'll navigates to send assessments route */}
-              <li
-                onClick={() => navigate("/sendAssessments", { state: data })}
-                className='admin-header-navbar-link'
-              >
-                Assessments
-              </li>
-              {/* when clicking this Test Report text, it'll navigates to test report route */}
-              <li
-                onClick={() => navigate("/testReport", { state: data })}
-                className='admin-header-navbar-link'
-              >
-                Test Report
-              </li>
-              {/* when clicking this Admin text, it'll navigates to admin login route and agains admin can access all routes */}
-              <li
-                onClick={() => navigate("/adminLogin")}
-                className='admin-header-navbar-link'
-              >
-                Admin
-              </li>
-            </ul>
-          </Popup>
-        </div>
-      </div>
       {/* table container with search, filter by date and table data */}
-      <div className=''>
-        <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+      <div>
+        <h1 className="test-report-heading">
           Stream Recommendation Test Tabulation Data
         </h1>
         {/* search input container */}
@@ -403,27 +311,31 @@ function TestReport() {
           />
         </div>
         {/* filter with start date, end date and filter button */}
-        <div className='date-filter'>
-          <div className='display-between'>
+        <div className='test-report-date-filter'>
+          <div className='test-report-display-between'>
             Start Date:{"   "}
             <input
               type='date'
               value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
+              className="test-report-date-input"
+              onChange={(e) => setStartDate(new Date(e.target.value))}
+              max = {new Date().toISOString().split("T")[0]}
               style={{ marginLeft: "10px" }}
             />
           </div>
-          <div className='display-between'>
+          <div className='test-report-display-between'>
             End Date:{" "}
             <input
               type='date'
               value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
+              className="test-report-date-input"
+              onChange={(e) => setEndDate(new Date(e.target.value))}
+              max = {new Date().toISOString().split("T")[0]}
               style={{ marginLeft: "10px" }}
             />
           </div>
           <button
-            style={{ padding: "2px", width: "60px" }}
+            style={{ padding: "3px", width: "60px",backgroundColor:"#004461",color:'#FFFFFF',border:'none',borderRadius:'5px' }}
             onClick={handleFilter}
           >
             Filter
@@ -525,7 +437,7 @@ function TestReport() {
                     {/* clicking view Data button it'll navigates to studentBarChart route */}
                     <div style={{ textAlign: "center" }}>
                       <button
-                        style={{ backgroundColor: "lightgrey" }}
+                        style={{ backgroundColor: "#ED2B2A" }}
                         className='view-button'
                         onClick={() =>
                           navigate("/studentBarChart", { state: item })

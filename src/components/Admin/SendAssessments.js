@@ -1,8 +1,6 @@
 // SendAssessments component is about displaying all students data respones of stream recommendation test in table
-// import react, react-router-dom, react-icons, js-cookie, xlsx, pizzip, @xmldom/xmldom, docxtemplater packages and reactjs-popup/dist/index.css and index.css files to render SendAssessments component
+// import react, react-router-dom, js-cookie, xlsx, pizzip, @xmldom/xmldom, docxtemplater packages and reactjs-popup/dist/index.css and index.css files to render SendAssessments component
 import React, { useRef, useState,useEffect } from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
-import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import Cookies from "js-cookie";
 import { read, utils } from "xlsx"; // used to read xlsx and xls files
@@ -12,11 +10,12 @@ import Docxtemplater from "docxtemplater"; // used to read docx files
 import {useLocation,useNavigate} from 'react-router-dom'
 import "./index.css";
 
-function SendAssessments() {
+function SendAssessments(props) {
     // location varaiable to get location of the testReport route and state
+    const {datat}=props
     const location=useLocation()
     // useState of data to store stream recommendation test data responses 
-    const [data,setData]=useState(location.state)
+    const [data,setData]=useState(datat)
     // navigate variable used to naviagating to different routes
     const navigate=useNavigate()
     // useState of selectedFile to store file
@@ -148,104 +147,6 @@ function SendAssessments() {
     }, []);
     return (
       <div>
-        {/* if admin has signedIn, the below code will render */}
-        <div className='admin-header-container'>
-          {/* header for desktop  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Sign Out */}
-          <div className='admin-header-logo-container'>
-            {/* logo and after clicking this logo, it'll navigates to home route*/}
-            <img
-              src='https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png'
-              alt='logo'
-              style={{
-                height: "50px",
-                width: "100px",
-                borderRadius: "10px",
-              }}
-              onClick={() => navigate("/")}
-            />
-          </div>
-          <div className='admin-desktop-header-navbar-container'>
-            {/* when clicking this Dashboard text, it'll navigates to dashboard route */}
-            <p
-              onClick={() => navigate("/dashboard", { state: data })}
-              className='admin-desktop-header-navbar-link'
-            >
-              Dashboard
-            </p>
-            {/* when clicking this Assessments text, it'll navigates to send assessments route */}
-            <p
-              onClick={() =>
-                navigate("/sendAssessments", { state: data })
-              }
-              className='admin-desktop-header-navbar-link'
-            >
-              Assessments
-            </p>
-            {/* when clicking this Test Report text, it'll navigates to test report route */}
-            <p
-              onClick={() => navigate("/testReport", { state: data})}
-              className='admin-desktop-header-navbar-link'
-            >
-              Test Report
-            </p>
-            {/* when clicking this Admin text, it'll navigates to admin login route and agains admin can access all routes */}
-            <p
-              className='admin-desktop-header-navbar-link'
-              onClick={()=>navigate('/adminLogin')}
-            >
-              Admin
-            </p>
-          </div>
-          {/* nav header for mobile  with Logo and components Dashboard, Assessments, Test Report and Admin */}
-          <div className='admin-mobile-header-navbar-container'>
-            <Popup
-              contentStyle={{ textAlign:'center',display:'flex',justifyContent:'center',width: "100%", backgroundColor: "white" }}
-              trigger={
-                <button className='admin-hamburger-btn'>
-                  <GiHamburgerMenu />
-                </button>
-              }
-              position='bottom right'
-            >
-              <ul className='admin-mobile-hamburger-menu'>
-                {/* when clicking this Dashboard text, it'll navigates to dashboard route */}
-                <li
-                  onClick={() =>
-                    navigate("/dashboard", { state: data})
-                  }
-                  className='admin-header-navbar-link'
-                >
-                  Dashboard
-                </li>
-                {/* when clicking this Assessments text, it'll navigates to send assessments route */}
-                <li
-                  onClick={() =>
-                    navigate("/sendAssessments", { state: data })
-                  }
-                  className='admin-header-navbar-link'
-                >
-                  Assessments
-                </li>
-                {/* when clicking this Test Report text, it'll navigates to test report route */}
-                <li
-                  onClick={() =>
-                    navigate("/testReport", { state: data})
-                  }
-                  className='admin-header-navbar-link'
-                >
-                  Test Report
-                </li>
-                {/* when clicking this Admin text, it'll navigates to admin login route and agains admin can access all routes */}
-                <li
-                  onClick={()=>navigate('/adminLogin')}
-                  className='admin-header-navbar-link'
-                >
-                  Admin
-                </li>
-              </ul>
-            </Popup>
-          </div>
-        </div>
         <div className="cards-container">
           <h1 style={{textAlign:'center',marginTop:'20px',marginBottom:'20px'}}>Send Assessments</h1>
           <div className='assessments-container'>
@@ -297,7 +198,7 @@ function SendAssessments() {
                   <br />
                   <div className="button">
                   <button
-                    className='btn btn-primary'
+                    className='send-ass-button'
                     onClick={handleSendEmail}
                   >
                     Send Email

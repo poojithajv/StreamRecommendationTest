@@ -1,8 +1,11 @@
 // Not Found component will render while accessing wrong paths
-// import index.css file for styling
+// import AdminLogin.css file for styling
 import "./AdminLogin.css";
+import {useNavigate} from 'react-router-dom'
 
 const NotFound = () => {
+  // navigate variable is used to navigating to different routes
+  const navigate=useNavigate()
   return (
     <div className='not-found-container'>
       <img
@@ -12,7 +15,7 @@ const NotFound = () => {
       />
       <h1 className='no-found-heading'>Page Not Found</h1>
       <p>we are sorry, the page you requested could not be found</p>
-      <p>Please go back to homepage</p>
+      <p onClick={()=>navigate('/')}>Please go back to homepage</p>
     </div>
   );
 };

@@ -1,12 +1,15 @@
 // Chart component is about score card design,downloading score card,sending scores to student through emails including cc 
 // import react, jspdf, @emailjs/browser, react-bootstrap, react-to-print, react-router-dom, recharts and css files index.css, bootstrap/dist/css/bootstrap.min.css to render chart component
 import React, { useRef, useState } from 'react'
+import { GiHamburgerMenu } from "react-icons/gi";
 import jsPDF from 'jspdf'; 
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 import emailjs from '@emailjs/browser';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import Footer from '../Footer/Footer'
 import { useReactToPrint } from "react-to-print";
 import { useLocation,useNavigate } from 'react-router-dom';
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts"
@@ -82,11 +85,71 @@ function Chart() {
     
   return (
     // chart container with student, piechart, download and send email button
-    <div  className="chart-container" >
+    <div>
+    <div className="chart-container">
+      {/* header for desktop  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Admin */}
+      <div className="admin-header-container">
+        <div className="admin-header-logo-container">
+          {/* logo */}
+          <img
+            src="https://res.cloudinary.com/de5cu0mab/image/upload/v1688971136/Logo_Final_uovjgi.png"
+            alt="logo"
+            style={{ height: "50px", width: "100px", borderRadius: "10px",border:'none',backgroundColor:'white' }}
+            onClick={() => navigate("/")}
+          />
+        </div>
+        <div className="admin-desktop-header-navbar-container">
+          {/* when clicking this Home text, it'll navigates to home route*/}
+          <p
+            className="admin-desktop-header-navbar-link"
+            onClick={() => navigate("/")}
+          >
+            Home
+          </p>
+          {/* when clicking this Admin text, it'll navigates to admin login route and again admin can access all routes */}
+          <p
+            className="admin-desktop-header-navbar-link"
+            onClick={() => navigate("/adminLogin")}
+          >
+            Admin
+          </p>
+        </div>
+        {/* nav header for mobile  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Admin */}
+        <div className="admin-mobile-header-navbar-container">
+          <Popup
+            contentStyle={{ width: '70%',backgroundColor:"white",textAlign:'center',display:'flex',flexDirection:'column',justifyContent:'content',alignItems:'center' }}
+            trigger={
+              <button className="admin-hamburger-btn">
+                <GiHamburgerMenu />
+              </button>
+            }
+            position="bottom right"
+          >
+            <ul className="admin-mobile-hamburger-menu">
+              {/* when clicking this Home text, it'll navigates to home route*/}
+              <li
+                onClick={() => navigate("/")}
+                className="admin-header-navbar-link"
+              >
+                Home
+              </li>
+              {/* when clicking this Admin text, it'll navigates to admin login route and again admin can access all routes */}
+              <li
+                onClick={() => navigate("/adminLogin")}
+                className="admin-header-navbar-link"
+              >
+                Admin
+              </li>
+            </ul>
+          </Popup>
+        </div>
+      </div>
+      {/* student details and piechart */}
       <div ref={detailsPdf} className="charts">
-        <div className='details'>
+      <div className='details'>
         <h1 style={{fontSize:'30px',fontWeight:'bold'}}>Student Details:</h1>
         <p>Name : {data.Full_Name}</p>
+        <p>Test Completed On  : {data.Timestamp}</p>
         <p>Email : {data.Email_Address}</p>
         <p>Phone Number : {data.Phone_Number}</p>
         <p>Parent Email Id: {data.Parent_Email_Id}</p>
@@ -95,9 +158,8 @@ function Chart() {
         <p>Aptitude Score : {data.humanities_aptitude_score+data.commerce_aptitude_score+data.science_bio_aptitude_score+data.science_math_aptitude_score}</p>
         <p>Interests Score : {data.humanities_interests_score+data.commerce_interests_score+data.science_bio_interests_score+data.science_math_interests_score}</p>
         </div>
-      <div >
-        {/* all streams aptitude and interest scores pie chart */}
-        <PieChart width={700} height={400} className='piechart'>
+        <div>
+          <PieChart width={280} height={280}>
           <Pie
             data={pieData}
             color="#000000"
@@ -105,7 +167,7 @@ function Chart() {
             nameKey="name"
             cx="50%"
             cy="50%"
-            outerRadius={130}
+            outerRadius={100}
             fill="#8884d8"
           >
             {pieData.map((entry, index) => (
@@ -117,44 +179,69 @@ function Chart() {
           </Pie>
           <Tooltip />
           <Legend />
-        </PieChart>
+          </PieChart>
         </div>
       </div>
-      <div className='button-container'>
-      {/* By clicking Download button, pdf with student data can be dowloaded */}
-      <button type='button' style={{backgroundColor:'cyan',width:'100px',height:'50px'}} className='send' onClick={generatePdf} >
-        Download
-      </button>
-      {/* By clicking the Send Email button, the boolean value of isOpen will be changed */}
-      <button style={{backgroundColor:'darkgrey',marginRight:'20px',width:'100px',height:'50px'}} onClick={()=> sendMail(data)} className='send'>Send Email</button>
-      <button style={{backgroundColor:'blue',marginRight:'20px',width:'100px',height:'50px'}} onClick={()=> navigate('/studentBarChart',{state:data})} className='send'>View Data</button>
+      {/* download, send email and view Data buttons  */}
+      <div className="button-container">
+        {/* download button to download the score card */}
+        <button
+          type="button"
+          style={{
+            backgroundColor: "#004461"}}
+            className='send'
+          onClick={generatePdf}
+        >
+          Download Score
+        </button>
+         {/* send email button to send the score card through email*/}
+        <button
+          style={{
+            backgroundColor: "darkgrey"}}
+          onClick={() => sendMail(data)}
+          className="send"
+        >
+          Send Email
+        </button>
+         {/* clicking view Data button to navigate to studentBarChart route*/}
+        <button style={{backgroundColor:'#ED2B2A'}} onClick={()=> navigate('/studentBarChart',{state:data})} className='send'>View Details</button>
       </div>
       {/* react-bootstrap modal for including cc */}
-        <Modal 
-        show={isOpen} 
-        onRequestClose={handleClose}
-      >
-      <Modal.Header closeButton  onClick={handleClose}>
-        <Modal.Title>Email Details</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-          <Form.Group >
-              <Form.Label>Student Mail ID: </Form.Label>
-              <Form.Control type="text" value={data.Email_Address}/>           
+      <Modal show={isOpen} onRequestClose={handleClose} className="modal">
+        <Modal.Header closeButton onClick={handleClose}>
+          <Modal.Title>Email Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group>
+            <Form.Label>Student Mail ID: </Form.Label>
+            <Form.Control type="text" value={data.Email_Address} />
           </Form.Group>
-          <Form.Group >
-              <Form.Label>CC Mail ID's: </Form.Label>
-              <Form.Control type="text" value={mailId} onChange={(e)=>setMailId(e.target.value)}/>           
+          <Form.Group>
+            <Form.Label>CC Mail ID's: </Form.Label>
+            <Form.Control
+              type="text"
+              value={mailId}
+              onChange={(e) => setMailId(e.target.value)}
+            />
           </Form.Group>
-      </Modal.Body>
-      <Modal.Footer>
-        {/* when clicking send Email buton, email will be sent to student */}
-          <Button variant="primary" type="submit" onClick={() => {handleSubmit(mailId)
-          setIsOpen(!isOpen)}}>
-              Send Email
-          </Button>
-      </Modal.Footer>
-    </Modal>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+          style={{backgroundColor:"#111359",marginTop:"-7px",color:'white',padding:'3px'}}
+            variant="primary"
+            type="submit"
+            
+            onClick={() => {
+              handleSubmit(mailId);
+              setIsOpen(!isOpen);
+            }}
+          >
+            Send Email
+          </button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+    <Footer />
     </div>
   )
 }

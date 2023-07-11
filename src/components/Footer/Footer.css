@@ -1,0 +1,69 @@
+.main {
+    background-color: #010000;
+    font-family: -apple-system, BlinkMacSystemFont, "Droid Sans", "Fira Sans",
+      "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue",
+      sans-serif;
+  }
+  .footer-main-container {
+    min-height: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .social_media {
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .sb__footer-below-links {
+    display: flex;
+    flex-direction: row;
+  }
+  .below-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    background-color: #010000;
+    color: #FFFFFF;
+  }
+  a {
+    text-decoration: none;
+    color: #FFFFFF;
+    margin: 5px;
+  }
+  @media screen and (max-width:950px){
+    .sb__footer-below-links{
+        width:330px;
+    }
+  }
+  @media screen and (max-width:850px){
+    .sb__footer-below-links{
+        margin-top: -25px;
+        width:350px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .below-container {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin-left: 20px;
+    }
+    .sb__footer-copyright{
+        margin-bottom: 20px;
+    }
+    .sb__footer-below-links{
+        flex-direction: column;
+        width:200px;
+    }
+    a{
+      margin-top:-10px;
+      margin-left: 0px;
+    }
+  }
+  .my-hr {
+    height: 2px;
+    background-color: #FFFFFF;
+  }

@@ -2,11 +2,11 @@
 .details-container {
   min-height: 70vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  width:100%;
+  color:'#010000';
 }
-
 /* TestInstructions component css */
 .test-instructions {
   display: flex;
@@ -16,36 +16,40 @@
   padding:30px;
   text-align: center;
   height:100vh;
-  margin-top: 30px;
+  color:'#010000';
 }
 .heading{
   font-size: 35px;
-  
+  color:'#010000';
 }
 .instruction-container {
   margin: auto;
   text-align: left;
-  height:500px;
+  height:450px;
   width:800px;
   background-color: antiquewhite;
   border-radius: 10px;
   overflow-y: scroll;
   padding: 20px;
   margin-bottom: 10px;
+  color:'#010000';
 }
 .instruction-heading{
   font-Size:30px;
   text-align: center;
+  color:'#010000';
+  text-decoration: underline;
 }
 .good-luck{
   font-Size:30px;
+  color:'#010000';
 }
 .instructions {
-  font-size: 23px;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 18px;
 }
 .label{
   font-size: 20px;
+  color:'#010000';
 }
 @media screen and (min-height:800px){
   .test-instructions{
@@ -108,4 +112,22 @@
   .label{
     font-size: 15px;
   }
+}
+.start-button{
+  margin-left: 10px;
+  background-color: #004461;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  color:#FFFFFF;
+  font-size: 15px;
+}
+.not-start-button{
+  margin-left: 10px;
+  background-color: grey;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  color:#FFFFFF;
+  font-size: 15px;
 }

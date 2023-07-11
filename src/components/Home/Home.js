@@ -1,25 +1,27 @@
-// Home component is about home page of overseas education 
+// Home component is about home page 
 // import packages react, react-icons, reactjs-popup, react-router-dom and css files reactjs-popup/dist/index.css and index.css to render home component
 import React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useNavigate } from "react-router-dom";
+import Footer from '../Footer/Footer'
 import "./index.css";
 
 function Home() {
   // navigate variable used to naviagating to different routes
   const navigate = useNavigate();
   return (
-    <>
+    <div>
+      <div className="home-container">
       <div className='headerContainer'>
         {/* header for desktop  with Logo and components Home, Student and Admin */}
         <div className='headerLogoContainer'>
           {/* logo and after clicking this logo, it'll navigates to home route*/}
           <img
-            src='https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png'
+            src='https://res.cloudinary.com/de5cu0mab/image/upload/v1688971136/Logo_Final_uovjgi.png'
             alt='logo'
-            style={{ height: "50px", width: "100px", borderRadius: "10px" }}
+            style={{ height: "50px", width: "100px", borderRadius: "10px",border:'none',backgroundColor:'white' }}
           />
         </div>
         <div className='desktopHeaderNavbarContainer'>
@@ -45,7 +47,7 @@ function Home() {
         {/* nav header for mobile  with Logo and components Home, Student and Admin */}
         <div className='mobileHeaderNavbarContainer'>
           <Popup
-            contentStyle={{ textAlign:'center',display:'flex',justifyContent:'center',width: "100%", backgroundColor: "white" }}
+            contentStyle={{ width: '70%',backgroundColor:"white",textAlign:'center',display:'flex',flexDirection:'column',justifyContent:'content',alignItems:'center' }}
             trigger={
               <button className='admin-hamburger-btn'>
                 <GiHamburgerMenu />
@@ -82,11 +84,14 @@ function Home() {
           justifyContent: "center",
           alignItems: "center",
           marginTop: "300px",
+          color:"#010000"
         }}
       >
         SRT
       </div>
-    </>
+      </div>
+      <Footer />
+    </div>
   );
 }
 

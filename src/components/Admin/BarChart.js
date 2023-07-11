@@ -1,12 +1,16 @@
-// BarChart component is about score card design,downloading score card,sending scores to student through emails including cc 
+// BarChart component is about displaying stream recommendation rank and barchart and sending that rank to student through emails including cc 
 // import react, jspdf, @emailjs/browser, react-bootstrap, react-to-print, react-router-dom, recharts and css files index.css, bootstrap/dist/css/bootstrap.min.css to render BarChart component
 import React, { useRef, useState } from 'react'
+import { GiHamburgerMenu } from "react-icons/gi";
 import jsPDF from 'jspdf'; 
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 import emailjs from '@emailjs/browser';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import Footer from '../Footer/Footer'
 import { useReactToPrint } from "react-to-print";
 import { useLocation,useNavigate } from 'react-router-dom';
 import { BarChart,Tooltip,Cell,Bar,CartesianGrid,XAxis,YAxis} from 'recharts';
@@ -92,88 +96,165 @@ function StudentBarChart() {
     setIsOpen(!isOpen)
   }
   return (
+    <div>
     <div className='barchart-container'>
-        {/* table with low, medium and high interest of all streams aptitude and interest scores data */}
-        <div ref={detailsPdf} className="barchart-container-responsive">
-          <div className="tables-container">
-        <div className='table-container'>
-            <h1 className='barchart-heading'>Stream wise aptitude and interest score</h1>
-        <table border="2px" style={{margin:'auto'}}>
-        <thead>
-                <tr>
-                    <th>Stream</th>
-                    <th>Aptitude</th>
-                    <th>Interest</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                {streams.map((item,index) =><tr>
-                    <td>{item[0]}</td>
-                    <td>{item[1]}</td>
-                    <td>{item[2]}</td>
-                    <td>{item[1]+item[2]}</td>
-                </tr>)}
-            </tbody>
-        </table>
+      {/* header for desktop  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Admin */}
+      <div className="admin-header-container">
+        <div className="admin-header-logo-container">
+          {/* logo */}
+          <img
+            src="https://res.cloudinary.com/de5cu0mab/image/upload/v1688971136/Logo_Final_uovjgi.png"
+            alt="logo"
+            style={{ height: "50px", width: "100px", borderRadius: "10px",border:'none',backgroundColor:'white' }}
+            onClick={() => navigate("/")}
+          />
         </div>
-        {/*All Streams Scores of Student in Stream Recommendation Test  */}
-        <div className='table-container'>
-        <h1 className='barchart-heading'>Student interest according to stream</h1>
-            <table border="2px" style={{margin:'auto'}}>
-            <thead>
-                    <tr>
-                        <th>Stream</th>
-                        <th>Aptitude</th>
-                        <th>Interest</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {streams.map((item,index) =><tr>
-                        <td>{item[0]}</td>
-                        <td>{item[1] > 0 && item[1]<2 ? 'Low' : (item[1] > 1 && item[1] < 4 ? 'Medium' : 'High' )}</td>
-                        <td>{item[2] > 0 && item[2]<6 ? 'Low' : (item[2] > 5 && item[2] < 11 ? 'Medium' : 'High' )}</td>
-                    </tr>)}
-                </tbody>
-            </table>
+        <div className="admin-desktop-header-navbar-container">
+          {/* when clicking this Home text, it'll navigates to home route*/}
+          <p
+            className="admin-desktop-header-navbar-link"
+            onClick={() => navigate("/")}
+          >
+            Home
+          </p>
+          {/* when clicking this Admin text, it'll navigates to admin login route and again admin can access all routes */}
+          <p
+            className="admin-desktop-header-navbar-link"
+            onClick={() => navigate("/adminLogin")}
+          >
+            Admin
+          </p>
         </div>
-        </div>
-        <div className="chart-buttons-container">
-        <div className='table-container'>
-            <h1 className='barchart-heading'>All streams Total Score Bar Chart</h1>
-            {/* bar chart of all streams total scores of stream recommendation test */}
-            <BarChart width={500} height={400} data={BarchartData} margin={{
-                top: 30,
-                right: 20,
-                left: 0,
-                bottom: 5
-            }} className='barchart'>
-            <CartesianGrid strokeDasharray="3 3" />
-            <Tooltip wrapperStyle={{ top: 0, left: 0 }}/>
-            <Bar dataKey="score" fill="green" barSize={40}
-                >   
-            {
-                BarchartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index%20]} />
-                ))
+        {/* nav header for mobile  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Admin */}
+        <div className="admin-mobile-header-navbar-container">
+          <Popup
+            contentStyle={{ width: '70%',backgroundColor:"white",textAlign:'center',display:'flex',flexDirection:'column',justifyContent:'content',alignItems:'center' }}
+            trigger={
+              <button className="admin-hamburger-btn">
+                <GiHamburgerMenu />
+              </button>
             }
-            </Bar>
-            <XAxis dataKey="name" style={{fontSize:'12px',fontWeight:'bold'}} />
-            <YAxis type="number" style={{fontSize:'15px',fontWeight:'bold'}} domain={[0, 20]}/>
-            </BarChart>
+            position="bottom right"
+          >
+            <ul className="admin-mobile-hamburger-menu">
+              {/* when clicking this Home text, it'll navigates to home route*/}
+              <li
+                onClick={() => navigate("/")}
+                className="admin-header-navbar-link"
+              >
+                Home
+              </li>
+              {/* when clicking this Admin text, it'll navigates to admin login route and again admin can access all routes */}
+              <li
+                onClick={() => navigate("/adminLogin")}
+                className="admin-header-navbar-link"
+              >
+                Admin
+              </li>
+            </ul>
+          </Popup>
+        </div>
+      </div>
+        {/* table with low, medium and high interest of all streams aptitude and interest scores data */}
+        <div ref={detailsPdf} >
+          <h1 className='rank-heading'>Stream Recommendation Rank</h1>
+          <div className='barchart-student-container'>
+            <h1 className='student-details-heading'>Student Details</h1>
+            <div className='barchart-student-details-container'>
+            <div className='barchart-student-details'>
+              <p>Name : {data.Full_Name} </p>
+              <p>Test Completed On : {data.Timestamp}</p>
             </div>
-        
+            <div className='barchart-student-details'>
+            <p>Email Address : {data.Email_Address} </p>
+              <p>Phone Number : {data.Phone_Number}</p>
+            </div>
+            </div>
+          </div>  
+          <div className="barchart-container-responsive">
+            <div className="tables-container">
+          <div className='table-container'>
+              <h1 className='barchart-heading'>Stream wise aptitude and interest score</h1>
+          <table border="2px">
+          <thead>
+                  <tr>
+                      <th>Stream</th>
+                      <th>Aptitude</th>
+                      <th>Interest</th>
+                      <th>Total</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {streams.map((item,index) =><tr>
+                      <td>{item[0]}</td>
+                      <td>{item[1]}</td>
+                      <td>{item[2]}</td>
+                      <td>{item[1]+item[2]}</td>
+                  </tr>)}
+              </tbody>
+          </table>
+          </div>
+          {/*All Streams Scores of Student in Stream Recommendation Test  */}
+          <div className='table-container'>
+          <h1 className='barchart-heading'>Student interest according to stream</h1>
+              <table border="2px">
+              <thead>
+                      <tr>
+                          <th>Stream</th>
+                          <th>Aptitude</th>
+                          <th>Interest</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {streams.map((item,index) =><tr>
+                          <td>{item[0]}</td>
+                          <td>{item[1] > 0 && item[1]<2 ? 'Low' : (item[1] > 1 && item[1] < 4 ? 'Medium' : 'High' )}</td>
+                          <td>{item[2] > 0 && item[2]<6 ? 'Low' : (item[2] > 5 && item[2] < 11 ? 'Medium' : 'High' )}</td>
+                      </tr>)}
+                  </tbody>
+              </table>
+          </div>
+          </div>
+          <div className='barchart-table-container'>
+              <h1 className='barchart-heading'>All streams Total Score Bar Chart</h1>
+              {/* bar chart of all streams total scores of stream recommendation test */}
+              <div className='barchart'>
+              <BarChart width={300} height={300} data={BarchartData} margin={{
+                  top: 30,
+                  right: 0,
+                  left: 0,
+                  bottom: 5
+              }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip wrapperStyle={{ top: 0, left: 0 }}/>
+              <Bar dataKey="score" fill="green" barSize={30}
+                  >   
+              {
+                  BarchartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index%20]} />
+                  ))
+              }
+              </Bar>
+              <XAxis dataKey="name" style={{fontSize:'8px',fontWeight:'bold'}} />
+              <YAxis type="number" style={{fontSize:'15px',fontWeight:'bold'}} domain={[0, 20]}/>
+              </BarChart>
+              </div>
+        </div>
+          </div>
+          <div>
+            <p className='copyright'>@{new Date().getFullYear()} Global Study OverSeas Education Consultants. All right
+              reserved.</p>
+          </div>
+        </div>
         <div className="barchart-buttons-container">
-      {/* By clicking Download button, pdf with student data can be dowloaded */}
-      <button type='button' style={{backgroundColor:'cyan',color:'white',padding:'10px',border:'none',fontSize:'15px',marginRight:'20px'}} onClick={generatePdf} >
-        Download
-      </button>
-      {/* By clicking the Send Email button, the boolean value of isOpen will be changed */}
-      <button style={{backgroundColor:'darkgrey',color:'white',padding:'10px',border:'none',fontSize:'15px',marginRight:'20px'}} onClick={()=> sendMail(data)} className='send'>Send Email</button>
-      {/* By clicking the Send Email button, the boolean value of isOpen will be changed */}
-      <button style={{backgroundColor:'blue',color:'white',padding:'10px',border:'none',fontSize:'15px',marginRight:'20px'}} onClick={()=> navigate('/studentChart',{state:data})}>View Score</button>
-      </div>
-      </div>
+          {/* By clicking Download button, pdf with student data can be dowloaded */}
+          <button type='button' style={{backgroundColor:'#004461'}} className='send-btn' onClick={generatePdf} >
+            Download Score
+          </button>
+          {/* By clicking the Send Email button, the boolean value of isOpen will be changed */}
+          <button style={{backgroundColor:'darkgrey'}} onClick={()=> sendMail(data)} className='send-btn'>Send Email</button>
+          {/* By clicking the view score button, studentChart route will be navigated */}
+          <button style={{backgroundColor:'#ED2B2A'}} onClick={()=> navigate('/studentChart',{state:data})} className='send-btn'>View Report</button>
         </div>
       {/* react-bootstrap modal for including cc */}
         <Modal 
@@ -200,9 +281,10 @@ function StudentBarChart() {
               Send Email
           </Button>
       </Modal.Footer>
-    </Modal>
+        </Modal>
+    </div>
+    <Footer />
     </div>
   )
 }
-
 export default StudentBarChart

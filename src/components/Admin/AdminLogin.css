@@ -3,9 +3,14 @@
     padding: 0px;
   }
   /* AdminLogin and TestReport conmponents css*/
+  .admin-container{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
   .admin-header-container{
     padding-left:30px;
-    background-color:#1d1a69;
+    background-color:#004461;
     color:white;
     height:60px;
     display:flex;
@@ -44,7 +49,7 @@
     background-position: 100% 100%;
     transform: scale(1);
     transition: transform 1s;
-    color:rgb(123, 120, 120);
+    color:#ED2B2A;
 }
   
   .admin-mobile-header-navbar-container{
@@ -53,12 +58,12 @@
   
   .admin-header-navbar-link{
     text-align: center;
-    color:#1d1a69;
+    color:#004461;
       width:170px;
       height:50px;
       font-weight:bold;
       margin-top:10px;
-      font-size: 12px;
+      font-size: 16px;
       margin-bottom:10px;
       margin-left: 10px;
       transition: border-color 0.66s ease-out, font-size 0.3s ease-out;
@@ -68,7 +73,7 @@
     background-position: 100% 100%;
     transform: scale(1.3);
     transition: transform 1s;
-    color:rgb(123, 120, 120);
+    color:#ED2B2A;
   }
   
   
@@ -134,6 +139,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    color:#010000;
   }
   .not-found-img {
     height: 300px;

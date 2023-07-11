@@ -1,6 +1,11 @@
 /* Home component css */
+.home-container{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 .headerContainer{
-    background-color:#1d1a69;
+    background-color:#004461;
     color:white;
     height:60px;
     display:flex;
@@ -18,7 +23,6 @@
     justify-content:center ;
     align-items:center;
 }
-
 .logo{
     height:50px;
     width:100px; 
@@ -36,7 +40,7 @@
 }
 
 .headerNavbarLink{
-    color:#1d1a69;
+    color:#004461;
     width:170px;
     height:50px;
     font-weight:bold;
@@ -59,13 +63,13 @@
   background-position: 100% 100%;
   transform: scale(1);
   transition: transform 1s;
-  color:rgb(123, 120, 120);
+  color:#ED2B2A;
 }
 .headerNavbarLink:hover{
  background-position: 100% 100%;
   transform: scale(1.3);
   transition: transform 1s;
-  color:rgb(123, 120, 120);
+  color:#ED2B2A;
 }
 
 @media (max-width:768px){
